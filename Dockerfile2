@@ -17,5 +17,5 @@ COPY . .
 
 
 
-# Set the command to start the main
+# the command to start the main
 CMD [ "node", "frontend/front.js" ]
