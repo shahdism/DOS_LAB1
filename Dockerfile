@@ -17,5 +17,5 @@ COPY . .
 
 EXPOSE 7001
 
-# Set the command to start the catalog service
+#  the command to start the catalog service
 CMD [ "node", "catalog/catalog.js" ]
