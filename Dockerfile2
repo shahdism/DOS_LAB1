@@ -8,6 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 COPY package-lock.json ./
 
+# Copy the database file from the local machine to the container
+COPY ../DataBase/database.db /app
 
 # Install dependencies
 RUN npm install
