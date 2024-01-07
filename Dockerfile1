@@ -17,5 +17,5 @@ COPY . .
 
 EXPOSE 8001
 
-# Set the command to start the order service
+#  the command to start the order service
 CMD [ "node", "order/order.js" ]
