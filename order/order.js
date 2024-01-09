@@ -4,7 +4,7 @@ const app = express();
 const port = 8002;
 const Cache = require('node-cache');
 
-const cache = new Cache(); 
+const cache = new Cache();
 app.use(express.json());
 
 const cacheMiddleware = async (req, res, next) => {
@@ -28,16 +28,20 @@ const cacheMiddleware = async (req, res, next) => {
     }
 
     const updatedStock = item.stockItems - 1;
-    await axios.put(`http://localhost:7001/updateStock/${item_number}`, {
+    const updateResponse = await axios.put(`http://localhost:7001/updateStock/${item_number}`, {
       stockItems: updatedStock,
     });
 
-    cache.set(cacheKey, item);
-    console.log('Catalog server response after update:', item);
-    res.json({ item });
+    if (updateResponse.status === 200) {
+      cache.set(cacheKey, item);
+      console.log('Catalog server response after update:', item);
+      return res.json({ item });
+    } else {
+      return res.status(500).json({ error: 'Failed to update stock' });
+    }
   } catch (error) {
     console.error('Error during purchase:', error.message);
-    res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ error: 'Internal server error' });
   }
 };
 
